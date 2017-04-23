@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.dao.PersonDaoMapper">
+    <!-- 添加 useGeneratedKeys="true" keyProperty="id" 能在插入完数据之后 获取到数据的id值 -->
+   <insert id="addPerson" useGeneratedKeys="true" keyProperty="id">
+       insert into tbl_person(name,age,registeredDate)VALUES (#{name},#{age},#{registeredDate})
+   </insert>
+
+    <select id="getPersonById" parameterType="Integer" resultType="Person">
+      select `id`,`name`,`age`,`registeredDate` from tbl_person where `id` = #{id}
+    </select>
+
+    <select id="getPersonByMap" parameterType="hashmap" resultType="Person">
+        select `id`,`name`,`age`,`registeredDate` from tbl_person where `name`= #{name} and `age` = #{age}
+    </select>
+
+    <update id="updatePerson" parameterType="Person" >
+        update tbl_person set `name`= #{name},`age`=#{age}, `registeredDate`=#{registeredDate} where `id`=#{id}
+    </update>
+
+    <delete id="removePerson" parameterType="Integer">
+        Delete from tbl_person where id = #{id}
+    </delete>
+
+    <select id="getAllPerson" resultType="Person">
+        select * from tbl_person
+    </select>
+
+</mapper>

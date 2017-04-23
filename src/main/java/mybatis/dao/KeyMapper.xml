@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.dao.KeyMapper">
+
+
+
+    <resultMap id="result" type="Key">
+        <id column="id" property="id"></id>
+        <result column="key_name" property="keyName"></result>
+    </resultMap>
+    <select id="getKeyById" parameterType="int" resultMap="result">
+        select id, key_name from tbl_key where id = #{id}
+    </select>
+
+</mapper>

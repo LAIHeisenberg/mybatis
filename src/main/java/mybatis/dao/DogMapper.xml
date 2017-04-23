@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.dao.DogMapper">
+
+    <insert id="addDog" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_dog(dog_name,dog_age,dog_color,dog_sexy) VALUES(#{dogName},#{dogAge},#{dogColor},#{dogSexy})
+    </insert>
+
+    <!-- 解决pojo类字段与数据库字段不一致的问题 方法一是用别名，方法二用resultMap映射，推荐方法二 -->
+    <resultMap id="dogInfo" type="hashmap">
+        <id column="id" property="id"></id>
+        <result column="dog_name" property="dogName"></result>
+        <result column="dog_color" property="dogColor"></result>
+        <result column="dog_Sexy" property="dogSexy"></result>
+    </resultMap>
+    <select id="getDogInfo" parameterType="hashmap" resultMap="dogInfo" >
+        select * from tbl_dog where dog_age = #{dogAge} and dog_sexy=#{dogSexy}
+    </select>
+
+</mapper>

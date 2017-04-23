@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.dao.LockMapper">
+
+
+    <!-- 一条连表sql查出所有数据,可能加载冗余数据造成数据量过大，不能使用mybatis懒加载 -->
+    <!--<resultMap id="result" type="Lock">
+        <id property="id" column="id"></id>
+        <result column="lock_name" property="lockName"></result>
+        <association property="key" javaType="Key">
+            <id column="id" property="id"></id>
+            <result column="key_name" property="keyName"></result>
+        </association>
+    </resultMap>
+    <select id="getLockById" parameterType="int" resultMap="result">
+        select k.id,k.key_name,l.id,l.lock_name,l.key_id from tbl_key k, tbl_lock l
+        where k.id = l.key_id and l.id = #{id}
+    </select>-->
+
+    <resultMap id="result" type="Lock">
+        <id property="id" column="id"></id>
+        <result column="lock_name" property="lockName"></result>
+        <association property="key" column="key_id" select="mybatis.dao.KeyMapper.getKeyById" />
+    </resultMap>
+    <select id="getLockById" parameterType="int" resultMap="result">
+        select id,lock_name,key_id from tbl_lock where id = #{id}
+    </select>
+
+
+</mapper>
